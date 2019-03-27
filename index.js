@@ -1,9 +1,9 @@
 const Nightmare = require('nightmare')
-const nightmare = Nightmare({ show: true })
+const nightmare = Nightmare({ show: false })
 
 
 nightmare
-  .goto('https://www.combinacionganadora.com/quiniela/2018-2019/jornada-44/')
+  .goto('https://www.bdfutbol.com/es/t/t2018-19.html')
   // .type('#search_form_input_homepage', 'github nightmare')
   // .click('#search_button_homepage')
   // .wait('#r1-0 a.result__a')
@@ -12,10 +12,23 @@ nightmare
       var encuentros = [];
 
       // CONSULTA PARA OBTENER OBJETOS DE CIERTO TIPO
-      $('table.matchTable tr').each(function(){
+      $('#classific tbody tr').each(function(){
           // DECLARAMOS UN OBJETO VACIO
           item = {};
           // AÑADIMOS LOS DATOS QUE NOS INTERESAN AL OBJETO
+          item ['clasificacion: '] = $(this).children().eq(1).text();
+          item ['equipo: '] = $(this).children().eq(3).text();
+          item ['puntos: '] = $(this).children().eq(4).text();
+          item ['pj: '] = $(this).children().eq(5).text();
+          item ['pg: '] = $(this).children().eq(6).text();
+          item ['pe: '] = $(this).children().eq(7).text();
+          item ['pp: '] = $(this).children().eq(8).text();
+          item ['gf: '] = $(this).children().eq(9).text();
+          item ['gc: '] = $(this).children().eq(10).text();
+          item ['ta: '] = $(this).children().eq(11).text();
+          item ['tr: '] = $(this).children().eq(12).text();
+    
+         /* 
           // forma 1ª para acceder a los hijos
           item['encuentro'] = $(this).children().eq(0).text();
           // forma 2ª para acceder a los hijos
@@ -24,7 +37,7 @@ nightmare
           item['visitante_gol'] = $(this).find('td:nth-child(6)').text();
           item['visitante'] = $(this).find('td:nth-child(8)').text();
           item['resultado'] = $(this).find('li.active').text();
-          // AÑADIMOS CADA UNO DE LOS HIJOS
+          // AÑADIMOS CADA UNO DE LOS HIJOS*/
           encuentros.push(item);
       })
       // RETORNAMOS EL RESULTADO
@@ -33,8 +46,8 @@ nightmare
   .end()
   // HACEMOS USO DEL RESULTADO
   .then(function(result){
-      for(encuentro in result){
-        console.log(result[encuentro]);
+      for(equipo in result){
+        console.log(result[equipo]);
       }
   })
   .catch(error => {
